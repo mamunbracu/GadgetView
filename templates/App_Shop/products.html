@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load cart_tag %}
+{% block title_block %} Products Detailes {% endblock %}
+
+{% block css_block %}
+<style>
+    .thumbnail {
+        width: 300px ;
+        height: auto ;
+        border: 1px solid gray;
+        -webkit-box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+        -moz-box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+        box-shadow: -1px -3px 5px -2px rgb(29, 26, 26);
+    }
+    .box-element {
+        box-shadow: hsl(0, 0%, 80%) 0 0 16px;
+        background-color: #fff;
+        border-radius: 4px;
+        border: 1px solid rgba(59, 14, 14, 0.842);
+        padding: 10px;
+    }
+    .price-old{
+        color: red;
+        font-size: 23px ;
+    }
+    .price-new{
+        color: rgb(6, 10, 1);
+        font-size: 23px ;
+    }
+</style>
+{% endblock %}
+
+{% block body_block %}
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6  my-5 thumbnail">
+            
+                <a href="#"><img src="/media/{{object.mainimage}}" style="width: 400px ;"></a>
+            
+        </div>
+        <div class="col-md-1 my-5" style="background-color: rgb(179, 140, 89);"></div>
+        <div class="col-md-5 my-5 box-element">
+            <h3 class="">{{object.name}}</h3>
+            <hr>
+            <p class="price-new">BDT &#2547;{{object.price}}</p>
+
+            <p><span class="currency price-old">BDT &#2547;</span><span class="num"><strike>{{object.old_price}}</strike></span>
+            </p>
+            <hr>
+
+            <p class="display-5 font-weight-bold">Description</p>
+            <p>{{object.detailes|linebreaks}}</p>
+            <hr>
+            <a href="{% url 'App_Order:add' pk=object.pk %}" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add
+                to Cart</a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %} {{title}} {% endblock %}
+
+{% block css_block %}
+<style>
+    .bd {
+        background-color: #ccc;
+    }
+
+    .sign_up {
+        width: 550px;
+        padding: 35px;
+        border: 1px solid #ccc;
+    }
+
+    .log_in {
+        width: 550px;
+        padding: 35px;
+        border: 1px solid #ccc;
+        margin-top: 5px;
+    }
+
+    @media(max-width: 320px) {
+        .login {
+            width: 100%;
+        }
+
+        .sign_up {
+            width: 100%;
+        }
+    }
+
+    @media(max-width: 420px) {
+        .sign_up {
+            width: 100%;
+        }
+
+        .log_in {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+
+{% block body_block %}
+
+<div class="row mt-5">
+    <div class="container ">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <center class="mt-4">
+
+                <div class="sign_up bd">
+                    <h3>Please Give us the info with your complain</h3>
+                    <hr>
+                    <hr>
+                    <form method="POST" class="text-left">
+                        {{form|crispy}}
+                        {% csrf_token %}
+                        <button type="submit" name="submit" class="btn btn-success btn-sm" style="width: 100% ;">Complain</button>
+
+                    </form>
+                </div>
+                <div class="log_in bd">
+                     <a href="{% url 'App_Shop:home' %}" class="btn btn-success btn-sm">Back To Home</a>
+                </div>
+            </center>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

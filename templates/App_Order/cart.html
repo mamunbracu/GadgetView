@@ -1,0 +1,131 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title_block %} Cart page {% endblock %}
+
+{% block css_block %}
+<style>
+  body{
+background-color: hsl(0, 0%, 98%);
+}
+
+h1,h2,h3,h4,h5,h6{
+color:hsl(0, 0%, 30%);
+}
+
+.box-element{
+box-shadow:hsl(0, 0%, 80%) 0 0 16px;
+background-color: #fff;
+border-radius: 4px;
+padding: 10px;
+}
+
+
+#cart-total{
+display: block;
+text-align: center;
+color:#fff;
+background-color: red;
+width: 20px;
+height: 25px;
+border-radius: 50%;
+font-size: 14px;
+}
+
+.col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
+margin-top: 10px;
+}
+
+
+
+
+
+.cart-row{
+display: flex;
+  align-items: flex-stretch;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ececec;
+
+}
+
+.quantity{
+display: inline-block;
+font-weight: 700;
+padding-right:10px;
+
+
+}
+.row-image{
+width: 100px;
+}
+.chg-quantity{
+width: 25px;
+cursor: pointer;
+display: block;
+margin-top: 5px;
+transition:.1s;
+}
+
+.chg-quantity:hover{
+opacity: .6;
+}
+
+
+.hidden{
+display: none!important;
+}
+</style>
+
+{% endblock %}
+
+{% block body_block %}
+<div class="container">
+<div class="row">
+  <div class="col-lg-12">
+    <div class="box-element">
+      <a href="{% url 'App_Shop:home' %}" class="btn btn-outline-dark">&#8592; Continue Shopping</a>
+      <br>
+      <br>
+      <table class="table">
+        <tr>
+          <th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
+          <th><h5>Totals: <strong>&#2547;{{order.get_totals|floatformat:2}}</strong></h5></th>
+          <th>
+            <a style="float:right; margin:5px" class="btn btn-success" href="{% url 'App_Payment:checkout' %}">Checkout</a>
+          </th>
+        </tr>
+      </table>
+    </div>
+<br>
+    <div class="box-element">
+      <div class="cart-row">
+        <div style="flex:1"><strong>Product Image</strong></div>
+        <div style="flex:1"><strong>Product Name</strong></div>
+        <div style="flex:1"><strong>Product Price</strong></div>
+        <div style="flex:1"><strong>Product Quantity</strong></div>
+        <div style="flex:1"><strong>Total</strong></div>
+        <div style="flex:1"><strong>Remove Item</strong></div>
+      </div>
+
+
+      {% for cart in carts %}
+      <div class="cart-row">
+        <div style="flex:1"> <img class="row-image" src="/media/{{cart.items.mainimage}}" alt=""></div>
+        <div style="flex:1">{{ cart.items.name}}</div>
+        <div style="flex:1">{{cart.items.price|floatformat:2}}</div>
+        <div style="flex:1">
+
+            <a href="{% url 'App_Order:decrease' pk=cart.items.pk %}" class="mr-2"><span class="badge badge-light"><i class="fas fa-minus"></i></span></a>
+            {{ cart.quantity}}
+            <a href="{% url 'App_Order:increase' pk=cart.items.pk %}" class="mr-2"><span class="badge badge-light"><i class="fas fa-plus"></i></span></a>
+          
+        </div>
+        <div style="flex:1">&#2547;{{ cart.get_total}}</div>
+        <div style="flex:1"><a href="{% url 'App_Order:remove' pk=cart.items.pk %}" class="btn btn-sm btn-danger">Remove from cart</a></div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

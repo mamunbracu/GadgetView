@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %} Checkout Page {% endblock %}
+
+{% block css_block %}
+<style>
+.box-element{
+box-shadow:hsl(0, 0%, 80%) 0 0 16px;
+background-color: #fff;
+border-radius: 4px;
+padding: 10px;
+}
+.cart-row{
+display: flex;
+align-items: flex-stretch;
+padding-bottom: 10px;
+margin-bottom: 10px;
+border-bottom: 1px solid #ececec;
+
+}
+
+.row-image{
+width: 100px;
+}
+.card {
+    height: 350px;
+  }
+</style>
+{% endblock %}
+
+{% block body_block %}
+<div class="container mt-5">
+    <h2 class="mb-3">
+        Shipping Address > <span class="text-muted">Checkout</span>
+    </h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-5" style="height: auto">
+                <div class="card-body">
+                    <form method="POST">
+                        {{form|crispy}}
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary float-right">Save Address</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box-element">
+                <a class="btn btn-outline-dark" href="{% url 'App_Order:cart' %}">&#x2190; Back to Cart</a>
+                <hr>
+                <h3>Order Summary</h3>
+                <hr>
+                {% for order_item in order_items %}
+                <div class="cart-row">
+                    <div style="flex:2"><img class="row-image" src="/media/{{order_item.items.mainimage}}"></div>
+                    <div style="flex:2">
+                        <p>{{order_item.items.name}}</p>
+                    </div>
+                    <div style="flex:1">
+                        <p>&#2547;{{order_item.items.price|floatformat:2}}</p>
+                    </div>
+                    <div style="flex:1">
+                        <p>{{order_item.quantity}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+                <h5>Items: <strong>{{order.get_cart_items}}</strong></h5>
+                <h5>Total:<b>&#2547; {{order_total|floatformat:2}}</b></h5>
+            </div>
+
+            <br>
+            <br>
+            {% if saved_address.is_fully_filled %}
+            <a href="{% url 'App_Payment:payment' %}" class="btn btn-warning btn-md">Make Payment</a>
+            {% else %}
+            <div class="alert alert-info">
+                <p>Please fill up all the information to make payment.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

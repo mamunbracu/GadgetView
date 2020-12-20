@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% load cart_tag %}
+{% load static %}
+{% block title_block %} Homepage {% endblock %}
+
+{% block css_block %}
+<style>
+.mainproduct{
+    background-color: rgb(226, 222, 215);
+}
+
+
+    .col-lg-4,
+    .col-lg-6,
+    .col-lg-8,
+    .col-lg-12 {
+        margin-top: 10px;
+    }
+
+    .btn {
+        border-radius: 0;
+    }
+
+    .thumbnail {
+        width: 100%;
+        height: 250px;
+        border: 1px solid gray;
+        -webkit-box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+        -moz-box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+        box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+    }
+
+    .box-element {
+        box-shadow: hsl(0, 0%, 80%) 0 0 16px;
+        background-color: #fff;
+        border-radius: 4px;
+        border: 1px solid rgb(196, 37, 37);
+        padding: 10px;
+    }
+
+    .product {
+        border-radius: 0 0 4px 4px;
+    }
+
+
+    footer{
+        background-color:#232f3e;
+    }
+    .footer-wrap span{
+        border: 1px solid red;
+        box-shadow:greenyellow;
+    }
+/* ######## grid css start */
+
+   
+
+
+/* ###### grid css end */
+</style>
+{% endblock %}
+
+{% block body_block %}
+
+<!-- ######### PRoduct grid system start #################### -->
+
+
+
+{% include 'App_Shop/product_grid.html' %}
+
+<!-- ###### product gris system end  ######################### -->
+
+
+
+
+<!-- ######### Main PRoduct page dynamic start ############ -->
+<section class="mainproduct">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h3 class="text-center py-3" style="color: rgb(189, 42, 42); font-size: 50px; font-weight: bold;">Gadget View Featured Products</h3> <hr>
+            </div>
+        </div>
+<div class="row py-5 mb-0">
+    {% for product in object_list %}
+    <div class="col-lg-4">
+        <img class="thumbnail p-3" src="/media/{{product.mainimage}}" alt="pic">
+        <div class="box-element product">
+            <div>
+            <h6><strong>{{product.name}}</strong></h6>
+            </div>
+            <hr>
+            <div class=" ">
+                <h4 style="display:inline-block; float:right">&#2547; {{product.price|floatformat:2}}</h4>
+                <h4 style="display:inline-block; float:left"><strike>&#2547;  {{product.old_price|floatformat:2}}</strike></h4>
+            </div>
+            <br>
+            <hr>
+            <div>
+                <a href="{% url 'App_Order:add' pk=product.pk %}" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                <a href="{% url 'App_Shop:product'  pk=product.pk %}" class="btn btn-outline-success" style=" float:right">Details</a>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+</div>
+<hr> <hr>
+</section>
+
+<section class="py-5">
+    <div class="row">
+        <div class="col-sm-12">
+            
+                    {% include 'slider.html' %}
+         
+        </div>
+    </div>
+</section>
+<!-- ######### Main PRoduct page dynamic End  ############ -->
+{% endblock %}
+
+{% block footer_block %}
+<hr>
+<!-- ##################### Footer   -->
+<footer class="footer-wrap">
+<div class="container py-5 mt-0">
+  <div class="row text-light">
+    <div class="col-md-4">
+        <h3>Gadget View Address</h3>
+        <hr>
+        <p><i class="fas fa-home"></i> 180/2, Gp Cha, Mohakhali Dhaka</p>
+        <p><i class="fab fa-creative-commons-sampling-plus"></i>  We Accept Both Online and Cash on Delivery Process</p>
+        <p><i class="fas fa-money-bill"></i>  <strong>Payment Method : </strong> </p>
+        <div>
+            <a href=""><span style="display: inline-block;" class=" btn btn-success text-light footer-style">Bkash</span></a>
+            <a href=""><span style="display: inline-block;" class="btn btn-primary text-light footer-style">Rocket</span></a>
+            <a href=""><span style="display: inline-block;" class="btn btn-warning text-light footer-style">Nagat</span></a>
+            <a href=""><span style="display: inline-block;" class="btn btn-info  footer-style">Ipay</span></a>
+            <a href="" ><span style="display: inline-block;" class="btn btn-danger text-light footer-style mt-2">Visa Card</span></a>
+            <a href="" ><span style="display: inline-block;" class="btn btn-success footer-style mt-2">Shopping card</span></a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h3 class="text-center">Contact Detailes</h3>
+        <hr>
+        <div>
+            <p><i class="fas fa-phone-square-alt"></i> Phone number: 01843241535</p>
+            <p><i class="fas fa-tty"></i> Telephone: 123 79548</p>
+            <p><i class="fas fa-envelope"></i> Email: abc@gmail.com</p>
+        </div>
+        <hr>
+        
+            <h3 class="text-center py-3">Social Links</h3>
+            <hr>
+            <div>
+                <a href="" style="color:white; padding: 15px; background-color: green;"><i class="fab fa-facebook fa-2x"></i></a>
+                <a href="" style="color:white; padding: 15px; background-color: rgb(36, 207, 170)"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="" style="color:white; padding: 15px; background-color: rgb(78, 18, 43)"><i class="fab fa-instagram fa-2x"></i></a>
+                <a href="" style="color:white; padding: 15px; background-color: red"><i class="fab fa-linkedin fa-2x"></i></a>
+        </div>
+        <div class="py-5">
+            <a href=""><img src="{% static 'images/gadget.jpg' %}" alt="" style="width: 300px; height: 200px;"></a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h3 class="text-center mb-2 py-2">Join Our Facebook page and group</h3>
+       <hr> <hr>
+        <div>
+            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fweb.facebook.com%2Fgadgetviewbangladesh&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="400" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+
+</footer>
+
+
+
+{% endblock %}

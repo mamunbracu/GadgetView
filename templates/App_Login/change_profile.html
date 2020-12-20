@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %} {{title}} {% endblock %}
+{% block css_block %}
+<style>
+.bd{
+    background-color: rgb(123, 176, 219);
+    }
+.login{
+width: 550px;
+padding: 40px;
+border:1px solid #ccc;
+}
+.btn{
+width:100%;
+}
+.sign_up{
+width:550px;
+padding:35px;
+border:1px solid #ccc;
+margin-top:5px;
+}
+
+@media(max-width: 320px){
+.login{
+    width:100%;
+}
+.sign_up{
+    width: 100%;
+}
+}
+
+@media(max-width: 420px){
+.login{
+    width:100%;
+}
+.sign_up{
+    width: 100%;
+}
+}
+</style>
+{% endblock %}
+
+
+{% block body_block %}
+<div class="row">
+    <div class="container">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+<center>
+    <div class="login mt-2 text-left bd">
+        <h2 class="text-center">Edit Your Profile :</h2>
+        <hr>
+        <form method="POST">
+            {{form|crispy}}
+            {% csrf_token %}
+            <button type="submit" name="submit" class="btn btn-primary btn-sm">Save Profile</button>
+        </form>
+    </div>
+</center>
+</div>
+</div>
+</div>
+{% endblock %}
